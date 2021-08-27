@@ -20,3 +20,18 @@
  * dosyasını döngü içinde dahil etmeli ve her yazı için detayları göstermelisiniz.
  */
 
+//getLatestPosts fonksiyonuna göndermek için count değişkenine random sayı gönderdik
+require_once ("functions.php");
+$count= getRandomPostCount(0,1000);
+//getLatestPosts fonksiyonunu çalıştırarak rastgele üretilen postları alıyoruz.
+$posts= getLatestPosts($count);
+if(isset($posts)) {
+    //post dizisi set edilmiş ise foreach ile postları döndürüp tek tek ekrana basıyoruz.
+    foreach ($posts as $post_item) {
+        $type = $post_item["type"];
+        $title = $post_item["title"];
+        $id = $post_item["id"];
+        $background_color=getBackgroundColor($type);
+        require ("post.php");
+    }
+}

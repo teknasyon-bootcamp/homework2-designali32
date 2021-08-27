@@ -23,3 +23,21 @@
  * - `getPostDetails` fonksiyonu tetiklenerek ilgili içeriğin çıktısı gösterilmeli.
  */
 
+//id, title, ve type değişkenlerinin daha önce tanımlanıp tanımlanmadığını !isset ile kontrol ettik.
+//tanımlama yoksa bizim değerlerimiz ile ekrana basacağımız verileri belirledik.
+if(!isset($id)){
+    $id=1;
+}
+if(!isset($title)){
+    $title="Başlık [post.php] dosyasındaki default başlık değeri";
+}
+if(!isset($type)){
+    $type="urgent";
+}
+//type değerine göre divin arka planının ne olacağını $background_color değişkenine attık
+//tanımlı fonksiyonları kullanmak için function.php dosyasını require ile içe aktardık.
+require_once ("functions.php");
+$background_color=getBackgroundColor($type);
+//div'i oluşturup getPostDetails ile ekrana basıyoruz.
+    echo "<div style=background:$background_color;>";
+    echo getPostDetails($id,$title)."</div>";

@@ -16,6 +16,13 @@
  * bekliyoruz. Bununla ilgili detaylı bilgi diğer betiklerde yer alıyor.
  */
 
+/*basename($_SERVER['PHP_SELF']) dosyanın serverdaki yolu ve adı, basename(__FILE__) ise şu anki bu kodun olduğu dosya adı
+Bu iki dosya adı aynı olur ise yani bu sayfa direk çalıştırılmak istenirse uyarı verip betiği bitirecek.
+Bu dosyayı farklı bir sayfaya include edersek o zaman __FILE__ kısmı function.php dosyası olmayacağı için çalıştırılacak.
+Aksi takdir de hata verecektir.*/
+if(basename($_SERVER['PHP_SELF'])==basename(__FILE__)){
+    exit("Bu sayfa tek başına çalıştırılamaz!");
+}
 function getLatestPosts($count = 5)
 {
     $posts = [];
@@ -28,7 +35,9 @@ function getLatestPosts($count = 5)
 
         $type = $postTypes[rand(0, count($postTypes)-1)];
 
+        //id değişkenini ekrana yazdırmak istediğimiz için posts dizisine id anahtarınıda ekledim
         $posts[$id] = [
+            "id" => $id,
             "title" => "Yazı " . $i,
             "type" => $type
         ];
@@ -49,3 +58,20 @@ EOT;
 
 // Aşağıya fonksiyonu tanımlayabilirsiniz.
 
+
+//getRandomPostCount min max değerleri ile random sayı üreten fonksiyon
+function getRandomPostCount($min,$max){
+    return rand($min,$max);
+}
+//type değişkeninden gelen değere göre, renk ataması yapmak için getBackgroundColor fonsiyonunu tanımladık.
+function getBackgroundColor($type){
+    if($type=="urgent"){
+        return "red";
+    }
+    elseif($type=="warning"){
+        return "yellow";
+    }
+    elseif($type=="normal"){
+        return "none";
+    }
+}
